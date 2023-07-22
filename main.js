@@ -1,5 +1,6 @@
 // get elements
 const userInput = document.getElementById("date");
+// set "max" attribute into date input to disable future dates
 userInput.max = new Date().toISOString().split("T")[0];
 
 const msg = document.getElementById("msg");
@@ -8,14 +9,16 @@ const button = document.getElementById("btn");
 // button click
 button.addEventListener("click", calculateAge);
 
-// calvculate age function
+// calculate age function
 function calculateAge() {
+  // get birth day
   let birthDate = new Date(userInput.value);
 
   let d1 = birthDate.getDate();
   let m1 = birthDate.getMonth() + 1;
   let y1 = birthDate.getFullYear();
 
+  // get current day
   let today = new Date();
 
   let d2 = today.getDate();
@@ -25,6 +28,7 @@ function calculateAge() {
   // difference
   let d3, m3, y3;
 
+// year difference 
   y3 = y2 - y1;
 
   // month difference
@@ -34,6 +38,7 @@ function calculateAge() {
     y3--;
     m3 = 12 + m2 - m1;
   }
+  
   // day difference
   if (d2 >= d1) {
     d3 = d2 - d1;
@@ -42,14 +47,17 @@ function calculateAge() {
     getDaysInMonth(y1, m1) + d2 - d1;
   }
 
+  // if month is negative,  decrease month & year 
   if (m3 < 0) {
     m3 = 11;
     y3--;
   }
-
+// display result 
   msg.innerHTML = `You are <span>${y3}</span> years, <span>${m3}</span> months and <span>${d3}</span> days old`;
-}
+} // ends calculateAge function 
 
+
+// function for get all days of a month (28, 30, 31)
 function getDaysInMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
